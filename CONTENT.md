@@ -49,7 +49,7 @@ Estructura de trabajo:
 - A las 7 pm { alguien } hace el Excalidraw Artistico + MEDIUM { spanish, english }
 - A las 8 pm { alguien } hace el Video de Youtube del Pseudo o el Excalidraw { spanish, english }
 - A las 9 pm { alguien } hace los SHORTS { spanish, english }
-
+    
 
 Al dia entregariamos:
 - 1 youtube doble 
