@@ -77,3 +77,127 @@ public:
         return ans;
     }
 };
+
+## 3: Maximum Average Subarray 1 | 14/05/24 | _.
+
+You are given an integer array nums consisting of n elements, and an integer k.
+Find a contiguous subarray whose length is equal to k that has the maximum average value and return this value. Any answer with a calculation error less than 10-5 will be accepted.
+
+FACTS:
+- PARAMS: 
+    - array of nums.
+    - integer k which is the ammount of numbers that should be considered to take the average.
+- RETURN:
+    - double number with the max average.
+- USING:
+    - a prefix sum instead of the original vector
+    - a double ans to track the max answer.
+    - a left pointer.
+    - a right pointer.
+- SOLVE IT:
+    - first we do a prefix sum using the same memory that the nums vector uses,
+    then we initialize the answer to be at least the kth value in this prefixed vector.
+    then we initialize the pointers, the right one to the next max value that is gonna be read 
+    and the left pointer pointing to the value that is before the window considered, this is used to be 
+    able to delete a value to the right pointer, this way obtaining the total sum at this point.
+
+class Solution {
+public:
+    int longestOnes(vector<int>& nums, int k) {
+        int left = 0;
+        int right = 0;
+        int ans = 0;
+        int used = 0;
+        for (int i=0;i<nums.size();i++){
+            if (nums[right]==0){
+                if (used < k){
+                    used++;
+                } else {
+                    while(nums[left]==1 && left<right){
+                        left++;
+                    }
+                    left++;
+                }
+            }
+            if (right-left+1>ans){
+                ans = right-left+1;
+            }
+            right++;
+        }
+        return ans;
+    }
+};
+
+## 4: Max Consecutive Ones 111 | 14/05/24 | _.
+
+Given a binary array nums and an integer k, return the maximum number of consecutive 1's in the array if you can flip at most k 0's.
+
+FACTS:
+- PARAMS:
+    - array of binary numbers
+    - int k which indicates the ammount of 0s that can be flipped.
+- RETURN:
+    - a int value that shows the max amount of numbers that are 1s or 1s and 2 flipped 0s.
+- USING:
+    - a left pointer initialized at the beginning.
+    - a right pointer initialized at the beginning.
+    - an ans int to store the actual max ammount.
+    - a used int variable to store the actual used or flipped 0s.
+- SOLVE IT:
+    - after initializing the variables, all at 0. (left ptr, right ptr, ans, used), we do a for loop 
+    on which, if the number on the right pointer is a 1, it compares if the ammount of numbers used is bigger than ans, if it is, it replaces it and move the right pointer to the next place.
+    Otherwise if the number on the right pointer is a 0, it checks if the 0s available are already in use, if they are not, we just add 1 to the used variable and continue with the normal process of comparing if the used numbers are the max, and moving the right pointer to the next one. But finally, we have another option, if it is a 0 on the right pointer, but the available flippable 0s are already in use, we have to make room for one more, so we iterate and 
+    advance the left pointer in order to find and free 1 0 position.
+
+class Solution {
+public:
+    int longestOnes(vector<int>& nums, int k) {
+        int left = 0;
+        int right = 0;
+        int ans = 0;
+        int used = 0;
+        for (int i=0;i<nums.size();i++){
+            if (nums[right]==0){
+                if (used < k){
+                    used++;
+                } else {
+                    while(nums[left]==1 && left<right){
+                        left++;
+                    }
+                    left++;
+                }
+            }
+            if (right-left+1>ans){
+                ans = right-left+1;
+            }
+            right++;
+        }
+        return ans;
+    }
+};
+
+## 5: Running Sum of 1d Array | 14/05/24 | _.
+
+Given an array nums. We define a running sum of an array as runningSum[i] = sum(nums[0]…nums[i]).
+Return the running sum of nums.
+
+FACTS:
+- PARAMS:
+    - array of numbers
+- RETURN:
+    - array of numbers with the prefix sum.
+- USING:
+    - the array of numbers given.
+- SOLVE IT:
+    -we just do a for loop, but we initialize i at 1, this way we can always add to each position in the array, the actual ammount plus
+    the accumulation from the previous number.
+
+class Solution {
+public:
+    vector<int> runningSum(vector<int>& nums) {
+        for (int i=1;i<nums.size();i++){
+            nums[i]=nums[i]+nums[i-1];
+        }
+        return nums;
+    }
+};
