@@ -273,3 +273,96 @@ public:
         return averages;
     }
 };
+
+## 8: Check if the Sentence Is Pangram | 17/05/24 | _.
+A pangram is a sentence where every letter of the English alphabet appears at least once.
+Given a string sentence containing only lowercase English letters, return true if sentence is a pangram, or false otherwise.
+
+FACTS:
+- PARAMS:
+    - string with the possible pangram
+- RETURN:
+    - bool, true if it is a pangram
+- USING:
+    - a size int to know the size of the string.
+    - an unordered_set of chars
+- SOLVE IT:
+    -First we validate that the string size is smaller than the alphabet size, if it is then we just return false.
+    otherwise, we add all the characters to the unordered set, but we avoid adding duplicates, so we check if we find the element already in
+    the hash before adding it. At the end, we validate that the size of the hash is not smaller than the size of the alphabet, this meaning
+    that if it is bigger, then we have found a pangram.
+
+
+class Solution {
+public:
+    bool checkIfPangram(string sentence) {
+        int size=sentence.size();
+        if (size<26){
+            return false;
+        }
+        unordered_set<char> seen;
+        for (char c: sentence) {
+            if (seen.find(c) == seen.end()) {
+                seen.insert(c);
+            }
+        }
+        if (seen.size()<26){
+            return false;
+        }   
+        return true;
+    }
+};
+
+## 9: Missing Number | 17/05/24 | _.
+
+Given an array nums containing n distinct numbers in the range [0, n], return the only number in the range that is missing from the array.
+
+FACTS:
+- PARAMS:
+    - vector of integers
+- RETURN:
+    - an int with the missing number on the vector based on its size
+- USING:
+    - a size int to know the size of the string.
+    - an unordered_set of integers.
+- SOLVE IT:
+    -First, we already know that the numbers inside the vector are not repeated, so we can add them without worrying about duplicates,
+    We do a for loop and we add all the vector integers into the unordered_set. After this, we do another for loop from 0 to the vector size,
+    on each iteration we see if the number is also in the unordered_set, if it is not, then we have already gotten our answer.
+class Solution {
+public:
+    int missingNumber(vector<int>& nums) {
+        int n=nums.size();
+        unordered_set<int> seen;
+        for (int i: nums) {
+                seen.insert(i);
+        }
+        for (int i=0;i<=n;i++){
+            if (seen.find(i) == seen.end()) {
+                return i;
+            }
+        }
+        return -1;
+    }
+};
+
+## 10:  Counting Elements | 17/05/24 | _.
+
+Given an integer array arr, count how many elements x there are, such that x + 1 is also in arr. If there are duplicates in arr, count them separately.
+
+class Solution {
+public:
+    int countElements(vector<int>& arr) {
+        unordered_set<int> seen;
+        int ans=0;
+        for(int i: arr){
+            seen.insert(i);
+        }
+        for(int i: arr){
+            if(seen.find(i+1) != seen.end()){
+                ans++;
+            }
+        }
+        return ans;
+    }
+};
