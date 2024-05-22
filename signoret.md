@@ -366,3 +366,194 @@ public:
         return ans;
     }
 };
+
+# COUNTING EXAMPLES:
+class Solution {
+public:
+    vector<int> intersection(vector<vector<int>>& nums) {
+        unordered_map<int, int> counts;
+        for (vector<int>& arr: nums) {
+            for (int x: arr) {
+                counts[x]++;
+            }
+        }
+        
+        int n = int(nums.size());
+        vector<int> ans;
+        for (auto [key, val]: counts) {
+            if (val == n) {
+                ans.push_back(key);
+            }
+        }
+        
+        sort(ans.begin(), ans.end());
+        return ans;
+    }
+};
+
+int findLongestSubstring(string s, int k) {
+    unordered_map<char, int> counts;
+    int left = 0, ans = 0;
+    
+    for (int right = 0; right < s.size(); right++) {
+        counts[s[right]]++;
+        while (counts.size() > k) {
+            counts[s[left]]--;
+            if (counts[s[left]] == 0) {
+                counts.erase(s[left]);
+            }
+            left++;
+        }
+        
+        ans = max(ans, right - left + 1);
+    }
+    
+    return ans;
+}
+
+class Solution {
+public:
+    bool areOccurrencesEqual(string s) {
+        unordered_map<char, int> counts;
+        for (char c: s) {
+            counts[c]++;
+        }
+        
+        unordered_set<int> frequencies;
+        for (auto [key, val]: counts) {
+            frequencies.insert(val);
+        }
+        
+        return frequencies.size() == 1;
+    }
+};
+
+class Solution {
+public:
+    int subarraySum(vector<int>& nums, int k) {
+        unordered_map<int, int> counts;
+        counts[0] = 1;
+        int ans = 0, curr = 0;
+        
+        for (int num: nums) {
+            curr += num;
+            ans += counts[curr - k];
+            counts[curr]++;
+        }
+        
+        return ans;
+    }
+};
+
+class Solution {
+public:
+    int numberOfSubarrays(vector<int>& nums, int k) {
+        unordered_map<int, int> counts;
+        counts[0] = 1;
+        int ans = 0, curr = 0;
+        
+        for (int num: nums) {
+            curr += num % 2;
+            ans += counts[curr - k];
+            counts[curr] += 1;
+        }
+        
+        return ans;
+    }
+};
+
+[[1,3],[2,3],[3,6],[5,6],[5,7],[4,5],[4,8],[4,9],[10,4],[10,9]]
+winner: 
+one
+more
+
+## 11: Find Players With Zero or One Losses | 21/05/24 | _.
+
+
+class Solution {
+public:
+    vector<vector<int>> findWinners(vector<vector<int>>& matches) {
+        // 1: make a list of the seen numbers
+        // 2: make a hashmap of the looses of each seen number
+        // 3: for each seen player, assign to the corresponding list by loses count
+
+        unordered_set<int> seen;
+        unordered_map<int, int> lossesCount;
+        
+        for (auto& match:matches) {
+            seen.insert(match[0]);
+            seen.insert(match[1]);
+            lossesCount[match[1]]++;
+        }
+
+        vector<vector<int>> ans(2, vector<int>());
+        for (auto player:seen) {
+            if (lossesCount.find(player) == lossesCount.end()){
+                ans[0].push_back(player);
+            } else if (lossesCount[player] == 1) {
+                ans[1].push_back(player);
+            }
+        }
+        
+        sort(ans[0].begin(),ans[0].end());
+        sort(ans[1].begin(),ans[1].end());
+        return ans;
+    }
+};
+
+## 12: Largest Unique Number | 21/05/24 | _.
+
+class Solution {
+public:
+    int largestUniqueNumber(vector<int>& nums) {
+        unordered_set<int> seen;
+        unordered_map<int,int> repetition;
+        for (int num:nums){
+            seen.insert(num);
+            repetition[num]++;
+        }
+        int ans = -1;
+        for (int s:seen){
+            if (repetition[s] == 1 && s>ans){
+                ans = s;
+            }
+        }
+        return ans;
+    }
+};
+
+## 13: Maximum Number of Balloons | 21/05/24 | _.
+
+class Solution {
+public:
+    int maxNumberOfBalloons(string text) {
+        unordered_set<char> seen;
+        unordered_map<char,int> repetition;
+        int ans = text.size();
+        string s1 = "ban";
+        string s2 = "lo";
+        for (char c:text){
+            seen.insert(c);
+            repetition[c]++;
+        }
+        for (char c:s1){
+            if (seen.find(c) == seen.end()){
+                ans = 0;
+                return ans;
+            }
+            else if (seen.find(c) != seen.end() && ans>repetition[c]) {
+                ans=repetition[c];
+            }
+        }
+        for (char c:s2){
+            if (seen.find(c) == seen.end() || repetition[c] == 1){
+                ans = 0;
+                return ans;
+            }
+            else if (seen.find(c) != seen.end() && ans>repetition[c]/2) {
+                ans=repetition[c]/2;
+            }
+        }
+        return ans;
+    }
+};
