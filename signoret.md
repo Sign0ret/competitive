@@ -557,3 +557,55 @@ public:
         return ans;
     }
 };
+
+## 15: Ransom Note | 24/05/24 | _.
+
+class Solution {
+public:
+    bool canConstruct(string ransomNote, string magazine) {
+        if (magazine.size()<ransomNote.size()){
+            return false;
+        }
+        unordered_set<char> need;
+        unordered_map<char,int> ran;
+        unordered_map<char,int> mag;
+        for(auto c:ransomNote){
+            need.insert(c);
+            ran[c]++;
+        }
+        for(auto c:magazine){
+            mag[c]++;
+        }
+        for(auto c:need){
+            if(mag[c]<ran[c]){
+                return false;
+            }
+        }
+        return true;
+    }
+};
+
+## 16: Longest Substring Without Repeating Characters | 24/05/24 | _.
+
+class Solution {
+public:
+    int lengthOfLongestSubstring(string s) {
+        unordered_map<char,int> sub;
+        int ans=0;
+        int actual=0;
+        int p=0;
+        for(auto c:s){
+            while(sub.find(c)!= sub.end()){
+                sub.erase(s[p]);
+                p++;
+                actual--;
+            }
+            sub[c]++;
+            actual++;
+            if (actual>ans){
+                ans=actual;
+            }
+        }
+        return ans;
+    }
+};
