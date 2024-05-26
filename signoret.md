@@ -609,3 +609,59 @@ public:
         return ans;
     }
 };
+
+## 17: Middle of the Linked List | 26/05/24 | _.
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* middleNode(ListNode* head) {
+        ListNode* slow = head;
+        ListNode* fast = head;
+        while (fast != nullptr && fast->next != nullptr) {
+            slow = slow->next;
+            fast = fast->next->next;
+        }
+
+        return slow;
+    }
+};
+
+## 18: Remove Duplicates from Sorted List | 26/05/24 | _.
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* deleteDuplicates(ListNode* head) {
+        ListNode* dummy=head;
+        ListNode* prev=nullptr;
+        while(dummy != nullptr){
+            if (prev!=nullptr && dummy->val==prev->val){
+                prev->next=dummy->next;
+                dummy=dummy->next;
+            } else {
+                prev=dummy;
+                dummy=dummy->next;
+            }
+        }
+        return head;
+    }
+};
